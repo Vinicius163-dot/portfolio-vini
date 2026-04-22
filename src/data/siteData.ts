@@ -9,7 +9,7 @@ export const siteData = {
   cvUrl: "#",
 
   github: {
-    username: "vinicius-possato",
+    username: "Vinicius163-dot",
     featured: [] as string[],
     maxRepos: 6,
   },
