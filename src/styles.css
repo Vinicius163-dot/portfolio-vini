@@ -968,6 +968,14 @@ section {
   opacity: 0.7;
 }
 
+.project-card__lang-icon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  display: block;
+  margin-bottom: 0.1rem;
+}
+
 .project-card__meta h3 {
   font-family: var(--font-display);
   font-size: 1rem;

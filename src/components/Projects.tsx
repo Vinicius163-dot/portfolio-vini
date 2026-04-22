@@ -4,6 +4,7 @@ import { useScrollReveal } from "../hooks/useScrollReveal";
 import {
   useGithubRepos,
   LANGUAGE_COLORS,
+  languageIconUrl,
   type GithubRepo,
 } from "../hooks/useGithubRepos";
 import { siteData } from "../data/siteData";
@@ -129,6 +130,7 @@ interface CardProps {
 
 function RepoCard({ repo, index, inView, isHovered, isDim, onHover }: CardProps) {
   const color = repo.language ? LANGUAGE_COLORS[repo.language] : undefined;
+  const iconUrl = languageIconUrl(repo.language);
 
   return (
     <motion.a
@@ -150,9 +152,21 @@ function RepoCard({ repo, index, inView, isHovered, isDim, onHover }: CardProps)
         style={{ background: color ?? "#555" }}
       />
       <div className="project-card__meta">
-        <span className="badge" style={{ color: color ?? "var(--muted)" }}>
-          {repo.language ?? "Repo"}
-        </span>
+        {iconUrl ? (
+          <img
+            className="project-card__lang-icon"
+            src={iconUrl}
+            alt={repo.language ?? ""}
+            title={repo.language ?? ""}
+            loading="lazy"
+            width={28}
+            height={28}
+          />
+        ) : (
+          <span className="badge" style={{ color: color ?? "var(--muted)" }}>
+            {repo.language ?? "Repo"}
+          </span>
+        )}
         <h3>{repo.name}</h3>
         <p>{repo.description ?? "Sem descrição."}</p>
       </div>

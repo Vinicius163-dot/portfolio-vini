@@ -119,6 +119,39 @@ function pickRepos(all: GithubRepo[], featured: string[], max: number) {
     .slice(0, max);
 }
 
+export const LANGUAGE_ICONS: Record<string, string> = {
+  TypeScript: "ts",
+  JavaScript: "js",
+  Python: "py",
+  Java: "java",
+  Go: "go",
+  HTML: "html",
+  CSS: "css",
+  Shell: "bash",
+  Dockerfile: "docker",
+  HCL: "terraform",
+  Kotlin: "kotlin",
+  Rust: "rust",
+  "C#": "cs",
+  "C++": "cpp",
+  C: "c",
+  Ruby: "ruby",
+  PHP: "php",
+  Swift: "swift",
+  Vue: "vue",
+  Svelte: "svelte",
+  Scala: "scala",
+  Lua: "lua",
+  Dart: "dart",
+};
+
+export function languageIconUrl(language: string | null): string | null {
+  if (!language) return null;
+  const slug = LANGUAGE_ICONS[language];
+  if (!slug) return null;
+  return `https://skillicons.dev/icons?i=${slug}&theme=dark`;
+}
+
 export const LANGUAGE_COLORS: Record<string, string> = {
   TypeScript: "#3178c6",
   JavaScript: "#f1e05a",
