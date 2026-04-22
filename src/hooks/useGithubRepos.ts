@@ -119,20 +119,36 @@ function pickRepos(all: GithubRepo[], featured: string[], max: number) {
     .slice(0, max);
 }
 
-export const LANGUAGE_ICONS: Record<string, string> = {
-  TypeScript: "ts",
-  JavaScript: "js",
-  Python: "py",
-  Java: "java",
-  Go: "go",
+import tsIcon from "../assets/logos/typescript.png";
+import jsIcon from "../assets/logos/javascript.png";
+import pyIcon from "../assets/logos/python.png";
+import javaIcon from "../assets/logos/java.png";
+import goIcon from "../assets/logos/go.png";
+import csIcon from "../assets/logos/csharp.png";
+import dockerIcon from "../assets/logos/docker.jpg";
+import nodeIcon from "../assets/logos/node.svg";
+import reactIcon from "../assets/logos/react.png";
+import githubIcon from "../assets/logos/github.png";
+
+const LOCAL_LANGUAGE_ICONS: Record<string, string> = {
+  TypeScript: tsIcon,
+  JavaScript: jsIcon,
+  Python: pyIcon,
+  Java: javaIcon,
+  Go: goIcon,
+  "C#": csIcon,
+  Dockerfile: dockerIcon,
+  Node: nodeIcon,
+  React: reactIcon,
+};
+
+const CDN_LANGUAGE_SLUGS: Record<string, string> = {
   HTML: "html",
   CSS: "css",
   Shell: "bash",
-  Dockerfile: "docker",
   HCL: "terraform",
   Kotlin: "kotlin",
   Rust: "rust",
-  "C#": "cs",
   "C++": "cpp",
   C: "c",
   Ruby: "ruby",
@@ -145,10 +161,11 @@ export const LANGUAGE_ICONS: Record<string, string> = {
   Dart: "dart",
 };
 
-export function languageIconUrl(language: string | null): string | null {
-  if (!language) return null;
-  const slug = LANGUAGE_ICONS[language];
-  if (!slug) return null;
+export function languageIconUrl(language: string | null): string {
+  if (!language) return githubIcon;
+  if (LOCAL_LANGUAGE_ICONS[language]) return LOCAL_LANGUAGE_ICONS[language];
+  const slug = CDN_LANGUAGE_SLUGS[language];
+  if (!slug) return githubIcon;
   return `https://skillicons.dev/icons?i=${slug}&theme=dark`;
 }
 

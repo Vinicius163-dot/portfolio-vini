@@ -152,21 +152,15 @@ function RepoCard({ repo, index, inView, isHovered, isDim, onHover }: CardProps)
         style={{ background: color ?? "#555" }}
       />
       <div className="project-card__meta">
-        {iconUrl ? (
-          <img
-            className="project-card__lang-icon"
-            src={iconUrl}
-            alt={repo.language ?? ""}
-            title={repo.language ?? ""}
-            loading="lazy"
-            width={28}
-            height={28}
-          />
-        ) : (
-          <span className="badge" style={{ color: color ?? "var(--muted)" }}>
-            {repo.language ?? "Repo"}
-          </span>
-        )}
+        <img
+          className="project-card__lang-icon"
+          src={iconUrl}
+          alt={repo.language ?? "Repository"}
+          title={repo.language ?? "Repository"}
+          loading="lazy"
+          width={28}
+          height={28}
+        />
         <h3>{repo.name}</h3>
         <p>{repo.description ?? "Sem descrição."}</p>
       </div>
