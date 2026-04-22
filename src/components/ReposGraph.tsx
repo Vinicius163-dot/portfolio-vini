@@ -28,12 +28,16 @@ const REPULSION = 2800;
 const CENTER_K = 0.008;
 const DAMPING = 0.82;
 
+const MIN_ZOOM = 0.35;
+const MAX_ZOOM = 3;
+
 export default function ReposGraph({ repos, hoveredId, onHover }: Props) {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const nodesRef = useRef<SimNode[]>([]);
   const draggingRef = useRef<{ id: number; moved: boolean } | null>(null);
   const pointerIdRef = useRef<number | null>(null);
   const [, setTick] = useState(0);
+  const [view, setView] = useState({ zoom: 1, panX: 0, panY: 0 });
 
   const edges = useMemo(() => {
     const result: [number, number][] = [];
@@ -165,6 +169,47 @@ export default function ReposGraph({ repos, hoveredId, onHover }: Props) {
   const hoveredNode =
     hoveredIndex !== null && hoveredIndex >= 0 ? nodes[hoveredIndex] : null;
 
+  useEffect(() => {
+    const svg = svgRef.current;
+    if (!svg) return;
+
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      const rect = svg.getBoundingClientRect();
+      const px = (e.clientX - rect.left) / rect.width;
+      const py = (e.clientY - rect.top) / rect.height;
+
+      setView((prev) => {
+        const viewW = SIZE / prev.zoom;
+        const cursorX = prev.panX + px * viewW;
+        const cursorY = prev.panY + py * viewW;
+
+        const factor = e.deltaY < 0 ? 1.15 : 1 / 1.15;
+        const nextZoom = Math.max(
+          MIN_ZOOM,
+          Math.min(MAX_ZOOM, prev.zoom * factor)
+        );
+        const nextViewW = SIZE / nextZoom;
+        return {
+          zoom: nextZoom,
+          panX: cursorX - px * nextViewW,
+          panY: cursorY - py * nextViewW,
+        };
+      });
+    };
+
+    const handleDblClick = () => {
+      setView({ zoom: 1, panX: 0, panY: 0 });
+    };
+
+    svg.addEventListener("wheel", handleWheel, { passive: false });
+    svg.addEventListener("dblclick", handleDblClick);
+    return () => {
+      svg.removeEventListener("wheel", handleWheel);
+      svg.removeEventListener("dblclick", handleDblClick);
+    };
+  }, []);
+
   const svgPoint = (clientX: number, clientY: number) => {
     const svg = svgRef.current;
     if (!svg) return { x: 0, y: 0 };
@@ -228,7 +273,7 @@ export default function ReposGraph({ repos, hoveredId, onHover }: Props) {
     <div className="repos-graph">
       <svg
         ref={svgRef}
-        viewBox={`0 0 ${SIZE} ${SIZE}`}
+        viewBox={`${view.panX} ${view.panY} ${SIZE / view.zoom} ${SIZE / view.zoom}`}
         className="repos-graph__svg"
       >
         <defs>
@@ -346,7 +391,7 @@ export default function ReposGraph({ repos, hoveredId, onHover }: Props) {
       )}
 
       <div className="repos-graph__legend">
-        {repos.length} repositórios · arraste os nós
+        {repos.length} repositórios · arraste · scroll para zoom · duplo clique reseta
       </div>
     </div>
   );
