@@ -42,6 +42,33 @@ export const siteData = {
     ],
   },
 
+  certifications: [
+    {
+      id: "aws-dev-assoc",
+      name: "Developer Associate",
+      issuer: "AWS",
+      year: "2024",
+      status: "active" as const,
+      credentialUrl: "#",
+    },
+    {
+      id: "aws-devops-pro",
+      name: "DevOps Engineer Professional",
+      issuer: "AWS",
+      year: null,
+      status: "planned" as const,
+      credentialUrl: null,
+    },
+    {
+      id: "aws-ml-spec",
+      name: "Machine Learning Specialty",
+      issuer: "AWS",
+      year: null,
+      status: "planned" as const,
+      credentialUrl: null,
+    },
+  ],
+
   social: [
     { label: "LinkedIn", url: "https://www.linkedin.com/", icon: "linkedin" },
     { label: "GitHub", url: "https://github.com/", icon: "github" },

@@ -13,10 +13,12 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
     "cmdk": "^1.1.1",
     "framer-motion": "^11.0.3",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "resend": "^6.12.2"
   },
   "devDependencies": {
     "@eslint/js": "^8.57.0",

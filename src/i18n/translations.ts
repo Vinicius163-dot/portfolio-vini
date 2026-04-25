@@ -71,6 +71,24 @@ export type Translation = {
   };
   footer: { copyright: string; backToTop: string };
   header: { homeAria: string; cmdkAria: string; menuAria: string; langAria: string };
+  certs: {
+    annotation: string;
+    title: string;
+    statuses: { active: string; planned: string };
+  };
+  chat: {
+    trigger: string;
+    title: string;
+    subtitle: string;
+    namePlaceholder: string;
+    messagePlaceholder: string;
+    send: string;
+    sending: string;
+    successTitle: string;
+    successBody: string;
+    errorBody: string;
+    close: string;
+  };
 };
 
 export const translations: Record<Lang, Translation> = {
@@ -182,6 +200,24 @@ export const translations: Record<Lang, Translation> = {
       menuAria: "Abrir navegação",
       langAria: "Selecionar idioma",
     },
+    certs: {
+      annotation: "... /certificações ...",
+      title: "Certificações",
+      statuses: { active: "Certificado", planned: "Planejada" },
+    },
+    chat: {
+      trigger: "Falar comigo",
+      title: "Olá!",
+      subtitle: "Manda uma mensagem, respondo em breve.",
+      namePlaceholder: "Seu nome",
+      messagePlaceholder: "Sua mensagem...",
+      send: "Enviar",
+      sending: "Enviando...",
+      successTitle: "Mensagem enviada!",
+      successBody: "Obrigado pelo contato, te respondo em breve.",
+      errorBody: "Algo deu errado. Tenta de novo.",
+      close: "Fechar",
+    },
   },
 
   en: {
@@ -291,6 +327,24 @@ export const translations: Record<Lang, Translation> = {
       cmdkAria: "Open command palette",
       menuAria: "Open navigation",
       langAria: "Select language",
+    },
+    certs: {
+      annotation: "... /certifications ...",
+      title: "Certifications",
+      statuses: { active: "Certified", planned: "Planned" },
+    },
+    chat: {
+      trigger: "Say hello",
+      title: "Hey!",
+      subtitle: "Send a message, I'll get back to you soon.",
+      namePlaceholder: "Your name",
+      messagePlaceholder: "Your message...",
+      send: "Send",
+      sending: "Sending...",
+      successTitle: "Message sent!",
+      successBody: "Thanks for reaching out, I'll reply soon.",
+      errorBody: "Something went wrong. Try again.",
+      close: "Close",
     },
   },
 
@@ -402,6 +456,24 @@ export const translations: Record<Lang, Translation> = {
       menuAria: "Abrir navegación",
       langAria: "Seleccionar idioma",
     },
+    certs: {
+      annotation: "... /certificaciones ...",
+      title: "Certificaciones",
+      statuses: { active: "Certificado", planned: "Planificada" },
+    },
+    chat: {
+      trigger: "Hablar conmigo",
+      title: "¡Hola!",
+      subtitle: "Mándame un mensaje, te respondo pronto.",
+      namePlaceholder: "Tu nombre",
+      messagePlaceholder: "Tu mensaje...",
+      send: "Enviar",
+      sending: "Enviando...",
+      successTitle: "¡Mensaje enviado!",
+      successBody: "Gracias por contactarme, te respondo pronto.",
+      errorBody: "Algo salió mal. Intenta de nuevo.",
+      close: "Cerrar",
+    },
   },
 
   fr: {
@@ -512,6 +584,24 @@ export const translations: Record<Lang, Translation> = {
       menuAria: "Ouvrir la navigation",
       langAria: "Sélectionner la langue",
     },
+    certs: {
+      annotation: "... /certifications ...",
+      title: "Certifications",
+      statuses: { active: "Certifié", planned: "Planifiée" },
+    },
+    chat: {
+      trigger: "Me contacter",
+      title: "Salut !",
+      subtitle: "Envoie un message, je te réponds bientôt.",
+      namePlaceholder: "Ton prénom",
+      messagePlaceholder: "Ton message...",
+      send: "Envoyer",
+      sending: "Envoi...",
+      successTitle: "Message envoyé !",
+      successBody: "Merci de m'avoir contacté, je réponds bientôt.",
+      errorBody: "Une erreur s'est produite. Réessaie.",
+      close: "Fermer",
+    },
   },
 
   it: {
@@ -621,6 +711,24 @@ export const translations: Record<Lang, Translation> = {
       cmdkAria: "Apri palette comandi",
       menuAria: "Apri navigazione",
       langAria: "Seleziona lingua",
+    },
+    certs: {
+      annotation: "... /certificazioni ...",
+      title: "Certificazioni",
+      statuses: { active: "Certificato", planned: "Pianificata" },
+    },
+    chat: {
+      trigger: "Scrivimi",
+      title: "Ciao!",
+      subtitle: "Mandami un messaggio, rispondo presto.",
+      namePlaceholder: "Il tuo nome",
+      messagePlaceholder: "Il tuo messaggio...",
+      send: "Invia",
+      sending: "Invio...",
+      successTitle: "Messaggio inviato!",
+      successBody: "Grazie per avermi contattato, rispondo presto.",
+      errorBody: "Qualcosa è andato storto. Riprova.",
+      close: "Chiudi",
     },
   },
 };
