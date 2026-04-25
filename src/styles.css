@@ -1537,6 +1537,12 @@ section {
   border: 1px solid var(--border);
 }
 
+.cert-card__img {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+}
+
 .cert-card__name {
   font-size: 1rem;
   font-weight: 600;

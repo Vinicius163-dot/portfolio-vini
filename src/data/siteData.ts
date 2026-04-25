@@ -50,6 +50,7 @@ export const siteData = {
       year: "2024",
       status: "active" as const,
       credentialUrl: "#",
+      badge: "developer-associate" as const,
     },
     {
       id: "aws-devops-pro",
@@ -58,6 +59,7 @@ export const siteData = {
       year: null,
       status: "planned" as const,
       credentialUrl: null,
+      badge: null,
     },
     {
       id: "aws-ml-spec",
@@ -66,6 +68,7 @@ export const siteData = {
       year: null,
       status: "planned" as const,
       credentialUrl: null,
+      badge: null,
     },
   ],
 
