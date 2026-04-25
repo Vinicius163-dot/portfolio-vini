@@ -68,7 +68,7 @@ export const siteData = {
       year: null,
       status: "planned" as const,
       credentialUrl: null,
-      badge: null,
+      badge: "ml-specialty",
     },
   ],
 

@@ -4,6 +4,7 @@ import { siteData } from "../data/siteData";
 import { useI18n } from "../i18n/I18nContext";
 import developerAssociateBadge from "../assets/logos/developer-associate.webp";
 import devopsProfessionalBadge from "../assets/logos/certified-devops-engineer-professional-logo-w160-e09dc28b.webp";
+import mlSpecialtyBadge from "../assets/logos/machine-learning.png";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 24 },
@@ -17,6 +18,7 @@ const cardVariants = {
 const BADGES: Record<string, string> = {
   "developer-associate": developerAssociateBadge,
   "devops-professional": devopsProfessionalBadge,
+  "ml-specialty": mlSpecialtyBadge,
 };
 
 export default function Certifications() {
