@@ -72,9 +72,18 @@ export const siteData = {
     },
   ],
 
+  articles: [] as {
+    id: string;
+    title: string;
+    url: string;
+    source: string;
+    date: string;
+    description?: string;
+  }[],
+
   social: [
-    { label: "LinkedIn", url: "https://www.linkedin.com/", icon: "linkedin" },
-    { label: "GitHub", url: "https://github.com/", icon: "github" },
+    { label: "LinkedIn", url: "https://www.linkedin.com/in/vinicius-cardoso-618097371", icon: "linkedin" },
+    { label: "GitHub", url: "https://github.com/Vinicius163-dot", icon: "github" },
   ],
 
   nav: [

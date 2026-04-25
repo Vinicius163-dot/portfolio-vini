@@ -2,6 +2,31 @@ import { motion } from "framer-motion";
 import { useScrollReveal } from "../hooks/useScrollReveal";
 import { siteData } from "../data/siteData";
 import { useI18n } from "../i18n/I18nContext";
+import { useCounter } from "../hooks/useCounter";
+
+function AnimatedStat({
+  display,
+  label,
+  isActive,
+}: {
+  display: string;
+  label: string;
+  isActive: boolean;
+}) {
+  const match = display.match(/^(\d+)(.*)$/);
+  const num = match ? parseInt(match[1], 10) : 0;
+  const suffix = match ? match[2] : "";
+  const pad = match ? match[1].length : 1;
+  const count = useCounter(num, isActive);
+  const formatted = String(count).padStart(pad, "0") + suffix;
+
+  return (
+    <div className="about-stat">
+      <span className="about-stat__value">{formatted}</span>
+      <span className="about-stat__label">{label}</span>
+    </div>
+  );
+}
 
 export default function Experience() {
   const { ref, isInView } = useScrollReveal(0.1);
@@ -44,16 +69,18 @@ export default function Experience() {
       </div>
 
       <div className="about__stats">
-        {about.statValues.map((value, i) => (
+        {about.statValues.map((display, i) => (
           <motion.div
             key={t.about.statLabels[i]}
-            className="about-stat"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.2 + i * 0.1 }}
           >
-            <span className="about-stat__value">{value}</span>
-            <span className="about-stat__label">{t.about.statLabels[i]}</span>
+            <AnimatedStat
+              display={display}
+              label={t.about.statLabels[i]}
+              isActive={isInView}
+            />
           </motion.div>
         ))}
       </div>

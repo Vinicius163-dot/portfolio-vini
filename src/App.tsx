@@ -8,6 +8,8 @@ import Experience from "./components/Experience";
 import Skills from "./components/Stack";
 import Work from "./components/Work";
 import Certifications from "./components/Certifications";
+import Articles from "./components/Articles";
+import Contributions from "./components/Contributions";
 import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
@@ -29,6 +31,8 @@ function App() {
         <Skills />
         <Work />
         <Certifications />
+        <Articles />
+        <Contributions />
         <Projects />
         <Contact />
       </main>

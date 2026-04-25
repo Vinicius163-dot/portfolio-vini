@@ -76,6 +76,14 @@ export type Translation = {
     title: string;
     statuses: { active: string; planned: string };
   };
+  articles: { annotation: string; title: string; readMore: string };
+  contributions: {
+    annotation: string;
+    title: string;
+    mergedPr: string;
+    loading: string;
+    empty: string;
+  };
   chat: {
     trigger: string;
     title: string;
@@ -205,6 +213,14 @@ export const translations: Record<Lang, Translation> = {
       title: "Certificações",
       statuses: { active: "Certificado", planned: "Planejada" },
     },
+    articles: { annotation: "... /artigos ...", title: "Artigos", readMore: "Ler →" },
+    contributions: {
+      annotation: "... /open source ...",
+      title: "Open Source",
+      mergedPr: "PR mergeado",
+      loading: "Carregando...",
+      empty: "Nenhuma contribuição encontrada.",
+    },
     chat: {
       trigger: "Falar comigo",
       title: "Olá!",
@@ -332,6 +348,14 @@ export const translations: Record<Lang, Translation> = {
       annotation: "... /certifications ...",
       title: "Certifications",
       statuses: { active: "Certified", planned: "Planned" },
+    },
+    articles: { annotation: "... /articles ...", title: "Articles", readMore: "Read →" },
+    contributions: {
+      annotation: "... /open source ...",
+      title: "Open Source",
+      mergedPr: "Merged PR",
+      loading: "Loading...",
+      empty: "No contributions found.",
     },
     chat: {
       trigger: "Say hello",
@@ -461,6 +485,14 @@ export const translations: Record<Lang, Translation> = {
       title: "Certificaciones",
       statuses: { active: "Certificado", planned: "Planificada" },
     },
+    articles: { annotation: "... /artículos ...", title: "Artículos", readMore: "Leer →" },
+    contributions: {
+      annotation: "... /open source ...",
+      title: "Open Source",
+      mergedPr: "PR merged",
+      loading: "Cargando...",
+      empty: "No se encontraron contribuciones.",
+    },
     chat: {
       trigger: "Hablar conmigo",
       title: "¡Hola!",
@@ -589,6 +621,14 @@ export const translations: Record<Lang, Translation> = {
       title: "Certifications",
       statuses: { active: "Certifié", planned: "Planifiée" },
     },
+    articles: { annotation: "... /articles ...", title: "Articles", readMore: "Lire →" },
+    contributions: {
+      annotation: "... /open source ...",
+      title: "Open Source",
+      mergedPr: "PR mergé",
+      loading: "Chargement...",
+      empty: "Aucune contribution trouvée.",
+    },
     chat: {
       trigger: "Me contacter",
       title: "Salut !",
@@ -716,6 +756,14 @@ export const translations: Record<Lang, Translation> = {
       annotation: "... /certificazioni ...",
       title: "Certificazioni",
       statuses: { active: "Certificato", planned: "Pianificata" },
+    },
+    articles: { annotation: "... /articoli ...", title: "Articoli", readMore: "Leggi →" },
+    contributions: {
+      annotation: "... /open source ...",
+      title: "Open Source",
+      mergedPr: "PR merged",
+      loading: "Caricamento...",
+      empty: "Nessun contributo trovato.",
     },
     chat: {
       trigger: "Scrivimi",
