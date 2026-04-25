@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { siteData } from "../data/siteData";
+import { useI18n } from "../i18n/I18nContext";
 import AvailabilityBadge from "./AvailabilityBadge";
+import LanguageToggle from "./LanguageToggle";
 
 interface Props {
   onOpenCommand: () => void;
@@ -9,6 +11,7 @@ interface Props {
 
 export default function Header({ onOpenCommand }: Props) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { t } = useI18n();
   const isMac =
     typeof navigator !== "undefined" &&
     /Mac|iPhone|iPad|iPod/.test(navigator.platform);
@@ -21,7 +24,7 @@ export default function Header({ onOpenCommand }: Props) {
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
       <div className="site-header__left">
-        <a className="logo" href="#home" aria-label="Início">
+        <a className="logo" href="#home" aria-label={t.header.homeAria}>
           <span>{siteData.firstName}</span>
           <span>{siteData.lastName}</span>
         </a>
@@ -34,18 +37,19 @@ export default function Header({ onOpenCommand }: Props) {
             href={item.href}
             onClick={() => setMenuOpen(false)}
           >
-            {item.label}
+            {t.nav[item.key]}
           </a>
         ))}
       </nav>
 
       <div className="header-cta">
         <AvailabilityBadge />
+        <LanguageToggle />
         <button
           type="button"
           className="cmdk-trigger"
           onClick={onOpenCommand}
-          aria-label="Abrir command palette"
+          aria-label={t.header.cmdkAria}
         >
           <kbd>{isMac ? "⌘" : "Ctrl"}</kbd>
           <kbd>K</kbd>
@@ -54,7 +58,7 @@ export default function Header({ onOpenCommand }: Props) {
 
       <button
         className="menu-toggle"
-        aria-label="Abrir navegação"
+        aria-label={t.header.menuAria}
         onClick={() => setMenuOpen((prev) => !prev)}
       >
         <span />

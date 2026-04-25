@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
-import { siteData } from "../data/siteData";
+import { useI18n } from "../i18n/I18nContext";
 
 export default function Footer() {
+  const { t } = useI18n();
+
   return (
     <motion.footer
       className="site-footer"
@@ -10,9 +12,9 @@ export default function Footer() {
       viewport={{ once: true }}
       transition={{ duration: 0.6 }}
     >
-      <p>© 2026 {siteData.name}. Built with care.</p>
+      <p>{t.footer.copyright}</p>
       <a className="text-link" href="#home">
-        Back to top ↑
+        {t.footer.backToTop}
       </a>
     </motion.footer>
   );

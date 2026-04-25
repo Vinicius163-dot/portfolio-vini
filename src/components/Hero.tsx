@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { siteData } from "../data/siteData";
+import { useI18n } from "../i18n/I18nContext";
 import heroBanner from "../assets/banner_portfolio.gif";
 
 const fadeUp = {
@@ -12,7 +13,8 @@ const fadeUp = {
 };
 
 export default function Hero() {
-  const { hero, social } = siteData;
+  const { social } = siteData;
+  const { t } = useI18n();
 
   return (
     <section className="hero" id="home">
@@ -32,7 +34,7 @@ export default function Hero() {
         animate="visible"
         custom={0}
       >
-        {hero.titleLines.map((line, i) => (
+        {t.hero.titleLines.map((line, i) => (
           <span key={i} className="hero__title-line">
             {line}
           </span>
@@ -49,7 +51,7 @@ export default function Hero() {
         >
           <p
             className="hero__desc"
-            dangerouslySetInnerHTML={{ __html: hero.eyebrow }}
+            dangerouslySetInnerHTML={{ __html: t.hero.eyebrow }}
           />
         </motion.div>
 
@@ -61,12 +63,12 @@ export default function Hero() {
           custom={2}
         >
           <a className="pill-btn" href="#projects">
-            Projects
+            {t.hero.projectsBtn}
           </a>
           <a
             className="pill-icon"
             href="#projects"
-            aria-label="Ir para projetos"
+            aria-label={t.hero.projectsAria}
           >
             <svg
               viewBox="0 0 24 24"

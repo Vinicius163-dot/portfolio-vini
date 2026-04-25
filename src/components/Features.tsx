@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { useScrollReveal } from "../hooks/useScrollReveal";
-import { siteData } from "../data/siteData";
+import { useI18n } from "../i18n/I18nContext";
 
 const cardVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -13,7 +13,8 @@ const cardVariants = {
 
 export default function Features() {
   const { ref, isInView } = useScrollReveal(0.12);
-  const { services } = siteData;
+  const { t } = useI18n();
+  const services = t.services;
 
   return (
     <section className="services" id="services" ref={ref}>
@@ -44,8 +45,8 @@ export default function Features() {
             <h3>{item.title}</h3>
             <p>{item.description}</p>
             <div className="chip-list-inline">
-              {item.tags.map((t) => (
-                <span key={t}>{t}</span>
+              {item.tags.map((tag) => (
+                <span key={tag}>{tag}</span>
               ))}
             </div>
           </motion.article>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Command } from "cmdk";
 import { siteData } from "../data/siteData";
+import { useI18n } from "../i18n/I18nContext";
 
 interface Props {
   open: boolean;
@@ -9,6 +10,7 @@ interface Props {
 
 export default function CommandMenu({ open, onOpenChange }: Props) {
   const [query, setQuery] = useState("");
+  const { t } = useI18n();
 
   useEffect(() => {
     const down = (e: KeyboardEvent) => {
@@ -40,16 +42,16 @@ export default function CommandMenu({ open, onOpenChange }: Props) {
           <Command.Input
             value={query}
             onValueChange={setQuery}
-            placeholder="Buscar por seção, projeto ou ação..."
+            placeholder={t.cmdk.placeholder}
             className="cmdk-input"
             autoFocus
           />
           <Command.List className="cmdk-list">
             <Command.Empty className="cmdk-empty">
-              Nenhum resultado encontrado.
+              {t.cmdk.empty}
             </Command.Empty>
 
-            <Command.Group heading="Navegar" className="cmdk-group">
+            <Command.Group heading={t.cmdk.navigate} className="cmdk-group">
               {siteData.nav.map((n) => (
                 <Command.Item
                   key={n.href}
@@ -57,25 +59,25 @@ export default function CommandMenu({ open, onOpenChange }: Props) {
                   onSelect={() => go(n.href)}
                 >
                   <span className="cmdk-item__icon">→</span>
-                  {n.label}
+                  {t.nav[n.key]}
                 </Command.Item>
               ))}
             </Command.Group>
 
-            <Command.Group heading="Ações" className="cmdk-group">
+            <Command.Group heading={t.cmdk.actions} className="cmdk-group">
               <Command.Item
                 className="cmdk-item"
                 onSelect={() => go(`mailto:${siteData.email}`)}
               >
                 <span className="cmdk-item__icon">✉</span>
-                Enviar email
+                {t.cmdk.sendEmail}
               </Command.Item>
               <Command.Item
                 className="cmdk-item"
                 onSelect={() => go(siteData.cvUrl)}
               >
                 <span className="cmdk-item__icon">↓</span>
-                Baixar CV
+                {t.cmdk.downloadCv}
               </Command.Item>
               <Command.Item
                 className="cmdk-item"
@@ -86,11 +88,11 @@ export default function CommandMenu({ open, onOpenChange }: Props) {
                 }
               >
                 <span className="cmdk-item__icon">⎘</span>
-                Copiar email
+                {t.cmdk.copyEmail}
               </Command.Item>
             </Command.Group>
 
-            <Command.Group heading="Links" className="cmdk-group">
+            <Command.Group heading={t.cmdk.links} className="cmdk-group">
               {siteData.social.map((s) => (
                 <Command.Item
                   key={s.url}
@@ -104,9 +106,9 @@ export default function CommandMenu({ open, onOpenChange }: Props) {
             </Command.Group>
           </Command.List>
           <footer className="cmdk-footer">
-            <span>↑↓ navegar</span>
-            <span>↵ selecionar</span>
-            <span>esc fechar</span>
+            <span>{t.cmdk.navHelp}</span>
+            <span>{t.cmdk.selectHelp}</span>
+            <span>{t.cmdk.closeHelp}</span>
           </footer>
         </Command>
       </div>

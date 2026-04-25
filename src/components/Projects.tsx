@@ -8,6 +8,8 @@ import {
   type GithubRepo,
 } from "../hooks/useGithubRepos";
 import { siteData } from "../data/siteData";
+import { useI18n } from "../i18n/I18nContext";
+import type { Lang } from "../i18n/translations";
 import ReposGraph from "./ReposGraph";
 
 const cardPop = {
@@ -19,9 +21,17 @@ const cardPop = {
   }),
 };
 
-function formatDate(iso: string) {
+const DATE_LOCALES: Record<Lang, string> = {
+  pt: "pt-BR",
+  en: "en-US",
+  es: "es-ES",
+  fr: "fr-FR",
+  it: "it-IT",
+};
+
+function formatDate(iso: string, lang: Lang) {
   const date = new Date(iso);
-  return date.toLocaleDateString("pt-BR", {
+  return date.toLocaleDateString(DATE_LOCALES[lang], {
     month: "short",
     year: "numeric",
   });
@@ -30,6 +40,7 @@ function formatDate(iso: string) {
 export default function Projects() {
   const { ref, isInView } = useScrollReveal(0.1);
   const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const { t, lang } = useI18n();
   const { repos, loading, error } = useGithubRepos({
     username: siteData.github.username,
     featured: siteData.github.featured,
@@ -45,12 +56,12 @@ export default function Projects() {
         transition={{ duration: 0.55 }}
       >
         <span className="section-header__annotation">
-          {siteData.projects.annotation}
+          {t.projects.annotation}
         </span>
         <div className="section-header__text">
-          <h2>Projects</h2>
+          <h2>{t.projects.title}</h2>
           <p>
-            Sincronizado em tempo real com{" "}
+            {t.projects.syncedWith}{" "}
             <a
               href={`https://github.com/${siteData.github.username}`}
               target="_blank"
@@ -79,15 +90,16 @@ export default function Projects() {
       {!loading && error && (
         <div className="projects__state">
           <p>
-            Não consegui carregar os repositórios agora ({error}). Tenta
-            recarregar mais tarde.
+            {t.projects.errorPrefix}
+            {error}
+            {t.projects.errorSuffix}
           </p>
         </div>
       )}
 
       {!loading && !error && repos.length === 0 && (
         <div className="projects__state">
-          <p>Nenhum repositório público encontrado ainda.</p>
+          <p>{t.projects.empty}</p>
         </div>
       )}
 
@@ -103,6 +115,13 @@ export default function Projects() {
                 isHovered={hoveredId === repo.id}
                 isDim={hoveredId !== null && hoveredId !== repo.id}
                 onHover={setHoveredId}
+                lang={lang}
+                strings={{
+                  noDescription: t.projects.noDescription,
+                  updatedPrefix: t.projects.updatedPrefix,
+                  starsTitle: t.projects.starsTitle,
+                  forksTitle: t.projects.forksTitle,
+                }}
               />
             ))}
           </div>
@@ -126,9 +145,25 @@ interface CardProps {
   isHovered: boolean;
   isDim: boolean;
   onHover: (id: number | null) => void;
+  lang: Lang;
+  strings: {
+    noDescription: string;
+    updatedPrefix: string;
+    starsTitle: string;
+    forksTitle: string;
+  };
 }
 
-function RepoCard({ repo, index, inView, isHovered, isDim, onHover }: CardProps) {
+function RepoCard({
+  repo,
+  index,
+  inView,
+  isHovered,
+  isDim,
+  onHover,
+  lang,
+  strings,
+}: CardProps) {
   const color = repo.language ? LANGUAGE_COLORS[repo.language] : undefined;
   const iconUrl = languageIconUrl(repo.language);
 
@@ -162,21 +197,23 @@ function RepoCard({ repo, index, inView, isHovered, isDim, onHover }: CardProps)
           height={28}
         />
         <h3>{repo.name}</h3>
-        <p>{repo.description ?? "Sem descrição."}</p>
+        <p>{repo.description ?? strings.noDescription}</p>
       </div>
 
       {repo.topics && repo.topics.length > 0 && (
         <ul className="chip-list">
-          {repo.topics.slice(0, 4).map((t) => (
-            <li key={t}>{t}</li>
+          {repo.topics.slice(0, 4).map((topic) => (
+            <li key={topic}>{topic}</li>
           ))}
         </ul>
       )}
 
       <footer className="project-card__footer">
-        <span title="Estrelas">★ {repo.stargazers_count}</span>
-        <span title="Forks">⑂ {repo.forks_count}</span>
-        <span>Atualizado {formatDate(repo.updated_at)}</span>
+        <span title={strings.starsTitle}>★ {repo.stargazers_count}</span>
+        <span title={strings.forksTitle}>⑂ {repo.forks_count}</span>
+        <span>
+          {strings.updatedPrefix} {formatDate(repo.updated_at, lang)}
+        </span>
       </footer>
     </motion.a>
   );
