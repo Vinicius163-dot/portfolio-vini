@@ -75,6 +75,8 @@ export type Translation = {
     annotation: string;
     title: string;
     statuses: { active: string; planned: string };
+    viewCredential: string;
+    plannedOrder: string;
   };
   articles: { annotation: string; title: string; readMore: string };
   contributions: {
@@ -212,6 +214,8 @@ export const translations: Record<Lang, Translation> = {
       annotation: "... /certificações ...",
       title: "Certificações",
       statuses: { active: "Certificado", planned: "Planejada" },
+      viewCredential: "Ver credencial ↗",
+      plannedOrder: "#{n}ª no roadmap",
     },
     articles: { annotation: "... /artigos ...", title: "Artigos", readMore: "Ler →" },
     contributions: {
@@ -348,6 +352,8 @@ export const translations: Record<Lang, Translation> = {
       annotation: "... /certifications ...",
       title: "Certifications",
       statuses: { active: "Certified", planned: "Planned" },
+      viewCredential: "View credential ↗",
+      plannedOrder: "#{n} on roadmap",
     },
     articles: { annotation: "... /articles ...", title: "Articles", readMore: "Read →" },
     contributions: {
@@ -484,6 +490,8 @@ export const translations: Record<Lang, Translation> = {
       annotation: "... /certificaciones ...",
       title: "Certificaciones",
       statuses: { active: "Certificado", planned: "Planificada" },
+      viewCredential: "Ver credencial ↗",
+      plannedOrder: "#{n}ª en el roadmap",
     },
     articles: { annotation: "... /artículos ...", title: "Artículos", readMore: "Leer →" },
     contributions: {
@@ -620,6 +628,8 @@ export const translations: Record<Lang, Translation> = {
       annotation: "... /certifications ...",
       title: "Certifications",
       statuses: { active: "Certifié", planned: "Planifiée" },
+      viewCredential: "Voir la certification ↗",
+      plannedOrder: "#{n}e dans le roadmap",
     },
     articles: { annotation: "... /articles ...", title: "Articles", readMore: "Lire →" },
     contributions: {
@@ -756,6 +766,8 @@ export const translations: Record<Lang, Translation> = {
       annotation: "... /certificazioni ...",
       title: "Certificazioni",
       statuses: { active: "Certificato", planned: "Pianificata" },
+      viewCredential: "Vedi credenziale ↗",
+      plannedOrder: "#{n}ª nel roadmap",
     },
     articles: { annotation: "... /articoli ...", title: "Articoli", readMore: "Leggi →" },
     contributions: {
