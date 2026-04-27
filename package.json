@@ -9,7 +9,7 @@
   "scripts": {
     "dev": "vite",
     "dev:admin": "cd Admin-Panel && npm run dev",
-    "build": "tsc && vite build && cd Admin-Panel && npm run build",
+    "build": "tsc && vite build && cd Admin-Panel && npm install && npm run build",
     "build:portfolio": "tsc && vite build",
     "build:admin": "cd Admin-Panel && npm run build",
     "preview": "vite preview",

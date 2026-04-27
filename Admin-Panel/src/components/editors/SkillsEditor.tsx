@@ -49,7 +49,7 @@ export default function SkillsEditor() {
   const active = localGroups ?? groups;
 
   function updateGroup(i: number, patch: Partial<SkillGroup>) {
-    const next = active.map((g, idx) => (idx === i ? { ...g, ...patch } : g));
+    const next = active.map((g: SkillGroup, idx: number) => (idx === i ? { ...g, ...patch } : g));
     setLocalGroups(next);
   }
 
@@ -74,7 +74,7 @@ export default function SkillsEditor() {
           <div className="skeleton-list">{[1,2,3,4].map((i) => <div key={i} className="skeleton-item skeleton-item--tall" />)}</div>
         ) : (
           <div className="skills-grid">
-            {active.map((group, i) => (
+            {active.map((group: SkillGroup, i: number) => (
               <div key={i} className="editor-section">
                 <div className="editor-section__header">
                   <input

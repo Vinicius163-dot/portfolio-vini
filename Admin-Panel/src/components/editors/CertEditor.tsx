@@ -78,13 +78,13 @@ export default function CertEditor() {
   }
 
   function handleUpdate(id: string, form: Omit<Cert, "id">) {
-    save(certs.map((c) => (c.id === id ? { id, ...form } : c)));
+    save(certs.map((c: Cert) => (c.id === id ? { id, ...form } : c)));
     setEditing(null);
   }
 
   function handleDelete(id: string) {
     if (!confirm("Delete this certification?")) return;
-    save(certs.filter((c) => c.id !== id));
+    save(certs.filter((c: Cert) => c.id !== id));
   }
 
   function moveUp(i: number) {
@@ -125,7 +125,7 @@ export default function CertEditor() {
           </div>
         ) : (
           <div className="item-list">
-            {certs.map((cert, i) => (
+            {certs.map((cert: Cert, i: number) => (
               <div key={cert.id} className="item-card">
                 {editing === cert.id ? (
                   <CertForm

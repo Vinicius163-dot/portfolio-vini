@@ -48,13 +48,13 @@ export default function WorkEditor() {
   }
 
   function handleUpdate(id: string, form: Omit<WorkItem, "id" | "order">) {
-    save(items.map((w) => (w.id === id ? { ...w, ...form } : w)));
+    save(items.map((w: WorkItem) => (w.id === id ? { ...w, ...form } : w)));
     setEditing(null);
   }
 
   function handleDelete(id: string) {
     if (!confirm("Delete this work entry?")) return;
-    save(items.filter((w) => w.id !== id).map((w, i) => ({ ...w, order: i })));
+    save(items.filter((w: WorkItem) => w.id !== id).map((w: WorkItem, i: number) => ({ ...w, order: i })));
   }
 
   function move(id: string, dir: -1 | 1) {

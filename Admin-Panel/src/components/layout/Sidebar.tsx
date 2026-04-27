@@ -20,7 +20,7 @@ export default function Sidebar() {
           <NavLink
             key={to}
             to={to}
-            className={({ isActive }) =>
+            className={({ isActive }: { isActive: boolean }) =>
               `sidebar__link${isActive ? " sidebar__link--active" : ""}`
             }
           >
