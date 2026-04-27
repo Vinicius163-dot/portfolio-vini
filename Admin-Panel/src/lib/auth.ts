@@ -50,15 +50,8 @@ export async function tryRestoreSession(): Promise<boolean> {
   return false;
 }
 
-export interface IAMCredentials {
-  accessKeyId: string;
-  secretAccessKey: string;
-}
-
-export async function login(
-  credentials: IAMCredentials
-): Promise<{ ok: true } | { ok: false; error: string }> {
-  const res = await authApi.login(credentials);
+export async function login(password: string): Promise<{ ok: true } | { ok: false; error: string }> {
+  const res = await authApi.login(password);
   if (!res.ok) return { ok: false, error: res.error };
   setSession(res.data.token, res.data.expiresAt);
   return { ok: true };

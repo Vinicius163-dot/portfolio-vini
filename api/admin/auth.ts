@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import { STSClient, GetCallerIdentityCommand } from "@aws-sdk/client-sts";
+import bcrypt from "bcryptjs";
 import {
   signAccessToken,
   signRefreshToken,
@@ -24,22 +24,6 @@ function isRateLimited(ip: string): boolean {
   return record.count > MAX_ATTEMPTS;
 }
 
-async function verifyIAMCredentials(
-  accessKeyId: string,
-  secretAccessKey: string
-): Promise<{ valid: boolean; accountId?: string; userId?: string; arn?: string }> {
-  try {
-    const sts = new STSClient({
-      region: process.env.AWS_REGION ?? "us-east-1",
-      credentials: { accessKeyId, secretAccessKey },
-    });
-    const { Account, UserId, Arn } = await sts.send(new GetCallerIdentityCommand({}));
-    return { valid: true, accountId: Account, userId: UserId, arn: Arn };
-  } catch {
-    return { valid: false };
-  }
-}
-
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   res.setHeader("Access-Control-Allow-Origin", process.env.ADMIN_ORIGIN ?? "*");
   res.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, OPTIONS");
@@ -48,32 +32,26 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
   if (req.method === "OPTIONS") return res.status(204).end();
 
-  // POST — login with IAM credentials
+  // POST — login with password
   if (req.method === "POST") {
     const ip = (req.headers["x-forwarded-for"] as string) ?? "unknown";
     if (isRateLimited(ip)) {
       return res.status(429).json({ ok: false, error: "Too many attempts. Try again in 15 minutes." });
     }
 
-    const { accessKeyId, secretAccessKey } = req.body as {
-      accessKeyId?: string;
-      secretAccessKey?: string;
-    };
-
-    if (!accessKeyId || !secretAccessKey) {
-      return res.status(400).json({ ok: false, error: "Access Key ID and Secret Access Key are required." });
+    const { password } = req.body as { password?: string };
+    if (!password) {
+      return res.status(400).json({ ok: false, error: "Password is required." });
     }
 
-    const identity = await verifyIAMCredentials(accessKeyId.trim(), secretAccessKey.trim());
-
-    if (!identity.valid) {
-      return res.status(401).json({ ok: false, error: "Invalid AWS credentials." });
+    const hash = process.env.ADMIN_PASSWORD_HASH;
+    if (!hash) {
+      return res.status(500).json({ ok: false, error: "Server misconfigured — ADMIN_PASSWORD_HASH not set." });
     }
 
-    // If EXPECTED_ACCOUNT_ID is set, restrict to that account only
-    const expectedAccount = process.env.EXPECTED_ACCOUNT_ID;
-    if (expectedAccount && identity.accountId !== expectedAccount) {
-      return res.status(403).json({ ok: false, error: "Credentials do not belong to the authorized account." });
+    const valid = await bcrypt.compare(password, hash);
+    if (!valid) {
+      return res.status(401).json({ ok: false, error: "Incorrect password." });
     }
 
     const token = signAccessToken();
@@ -81,13 +59,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const expiresAt = Date.now() + 15 * 60 * 1000;
 
     setRefreshCookie(res, refreshToken);
-    return res.status(200).json({
-      ok: true,
-      data: { token, expiresAt, identity: { accountId: identity.accountId, arn: identity.arn } },
-    });
+    return res.status(200).json({ ok: true, data: { token, expiresAt } });
   }
 
-  // GET — refresh access token via httpOnly refresh cookie
+  // GET — refresh via httpOnly cookie
   if (req.method === "GET") {
     const refreshToken = getRefreshCookie(req);
     if (!refreshToken) {
