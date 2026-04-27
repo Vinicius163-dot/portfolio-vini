@@ -8,20 +8,29 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "dev:admin": "cd Admin-Panel && npm run dev",
+    "build": "tsc && vite build && cd Admin-Panel && npm run build",
+    "build:portfolio": "tsc && vite build",
+    "build:admin": "cd Admin-Panel && npm run build",
     "preview": "vite preview",
     "lint": "eslint ."
   },
   "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.787.0",
+    "@aws-sdk/lib-dynamodb": "^3.787.0",
     "@vercel/analytics": "^2.0.1",
+    "bcryptjs": "^3.0.2",
     "cmdk": "^1.1.1",
     "framer-motion": "^11.0.3",
+    "jsonwebtoken": "^9.0.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "resend": "^6.12.2"
   },
   "devDependencies": {
     "@eslint/js": "^8.57.0",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.9",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.21",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
