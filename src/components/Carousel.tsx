@@ -14,55 +14,78 @@ import reactLogo from "../assets/logos/react.png";
 import springLogo from "../assets/logos/spring.png";
 import typescriptLogo from "../assets/logos/typescript.png";
 
-const platforms: { name: string; icon: string }[] = [
-  { name: "AWS", icon: awsLogo },
-  { name: "Azure", icon: "https://skillicons.dev/icons?i=azure&theme=dark" },
-  { name: "GitHub", icon: githubLogo },
-  { name: "Java", icon: javaLogo },
-  { name: "Spring Boot", icon: springLogo },
-  { name: "Python", icon: pythonLogo },
-  { name: "Go", icon: goLogo },
-  { name: "Node", icon: nodeLogo },
-  { name: "TypeScript", icon: typescriptLogo },
-  { name: "JavaScript", icon: javascriptLogo },
-  { name: "C#", icon: csharpLogo },
-  { name: "React", icon: reactLogo },
-  { name: "MCP", icon: mcpLogo },
-  { name: "Docker", icon: dockerLogo },
-  { name: "Kubernetes", icon: kubernetesLogo },
+type Category = "Backend" | "Frontend" | "Cloud" | "DevOps";
+
+const CATEGORY_COLORS: Record<Category, string> = {
+  Backend: "#6366f1",
+  Frontend: "#06b6d4",
+  Cloud: "#f59e0b",
+  DevOps: "#22c55e",
+};
+
+const platforms: { name: string; icon: string; category: Category }[] = [
+  { name: "AWS",         icon: awsLogo,        category: "Cloud"    },
+  { name: "Azure",       icon: "https://skillicons.dev/icons?i=azure&theme=dark", category: "Cloud" },
+  { name: "GitHub",      icon: githubLogo,     category: "DevOps"   },
+  { name: "Java",        icon: javaLogo,       category: "Backend"  },
+  { name: "Spring Boot", icon: springLogo,     category: "Backend"  },
+  { name: "Python",      icon: pythonLogo,     category: "Backend"  },
+  { name: "Go",          icon: goLogo,         category: "Backend"  },
+  { name: "Node",        icon: nodeLogo,       category: "Backend"  },
+  { name: "TypeScript",  icon: typescriptLogo, category: "Frontend" },
+  { name: "JavaScript",  icon: javascriptLogo, category: "Frontend" },
+  { name: "C#",          icon: csharpLogo,     category: "Backend"  },
+  { name: "React",       icon: reactLogo,      category: "Frontend" },
+  { name: "MCP",         icon: mcpLogo,        category: "Backend"  },
+  { name: "Docker",      icon: dockerLogo,     category: "DevOps"   },
+  { name: "Kubernetes",  icon: kubernetesLogo, category: "DevOps"   },
 ];
 
 export default function Carousel() {
   const loop = [...platforms, ...platforms, ...platforms];
   const [paused, setPaused] = useState(false);
-  const [tooltip, setTooltip] = useState<string | null>(null);
+  const [activeKey, setActiveKey] = useState<string | null>(null);
 
   return (
     <div className="platforms">
       <div
         className="platforms__track-wrap"
         onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => { setPaused(false); setTooltip(null); }}
+        onMouseLeave={() => { setPaused(false); setActiveKey(null); }}
       >
         <div className={`platforms__track${paused ? " platforms__track--paused" : ""}`}>
-          {loop.map((p, i) => (
-            <span
-              key={i}
-              className={`platform-chip${tooltip === p.name + i ? " platform-chip--active" : ""}`}
-              onMouseEnter={() => setTooltip(p.name + i)}
-              onMouseLeave={() => setTooltip(null)}
-            >
-              <img
-                className="platform-chip__icon"
-                src={p.icon}
-                alt=""
-                loading="lazy"
-                width={22}
-                height={22}
-              />
-              {p.name}
-            </span>
-          ))}
+          {loop.map((p, i) => {
+            const key = p.name + i;
+            const isActive = activeKey === key;
+            return (
+              <span
+                key={i}
+                className={`platform-chip platform-chip--icon-only${isActive ? " platform-chip--active" : ""}`}
+                onMouseEnter={() => setActiveKey(key)}
+                onMouseLeave={() => setActiveKey(null)}
+              >
+                <img
+                  className="platform-chip__icon"
+                  src={p.icon}
+                  alt={p.name}
+                  loading="lazy"
+                  width={26}
+                  height={26}
+                />
+                {isActive && (
+                  <span className="platform-chip__tooltip">
+                    <span className="platform-chip__tooltip-name">{p.name}</span>
+                    <span
+                      className="platform-chip__tooltip-badge"
+                      style={{ background: CATEGORY_COLORS[p.category] + "22", color: CATEGORY_COLORS[p.category], borderColor: CATEGORY_COLORS[p.category] + "55" }}
+                    >
+                      {p.category}
+                    </span>
+                  </span>
+                )}
+              </span>
+            );
+          })}
         </div>
       </div>
     </div>
