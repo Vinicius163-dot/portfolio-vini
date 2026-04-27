@@ -40,12 +40,21 @@ function formatDate(iso: string, lang: Lang) {
 export default function Projects() {
   const { ref, isInView } = useScrollReveal(0.1);
   const [hoveredId, setHoveredId] = useState<number | null>(null);
+  const [langFilter, setLangFilter] = useState<string | null>(null);
   const { t, lang } = useI18n();
   const { repos, loading, error } = useGithubRepos({
     username: siteData.github.username,
     featured: siteData.github.featured,
     max: siteData.github.maxRepos,
   });
+
+  const languages = Array.from(
+    new Set(repos.map((r) => r.language).filter(Boolean) as string[])
+  );
+
+  const visibleRepos = langFilter
+    ? repos.filter((r) => r.language === langFilter)
+    : repos;
 
   return (
     <section className="projects" id="projects" ref={ref}>
@@ -73,6 +82,30 @@ export default function Projects() {
           </p>
         </div>
       </motion.header>
+
+      {!loading && !error && languages.length > 1 && (
+        <div className="projects__lang-filter">
+          <button
+            className={`projects__lang-btn${langFilter === null ? " projects__lang-btn--active" : ""}`}
+            onClick={() => setLangFilter(null)}
+          >
+            All
+          </button>
+          {languages.map((l) => (
+            <button
+              key={l}
+              className={`projects__lang-btn${langFilter === l ? " projects__lang-btn--active" : ""}`}
+              onClick={() => setLangFilter(langFilter === l ? null : l)}
+            >
+              <span
+                className="projects__lang-dot"
+                style={{ background: LANGUAGE_COLORS[l] ?? "#555" }}
+              />
+              {l}
+            </button>
+          ))}
+        </div>
+      )}
 
       {loading && (
         <div className="projects__layout">
@@ -106,7 +139,7 @@ export default function Projects() {
       {!loading && !error && repos.length > 0 && (
         <div className="projects__layout">
           <div className="projects__cards">
-            {repos.map((repo, i) => (
+            {visibleRepos.map((repo, i) => (
               <RepoCard
                 key={repo.id}
                 repo={repo}

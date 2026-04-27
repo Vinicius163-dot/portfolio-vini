@@ -10,6 +10,7 @@ export const siteData = {
 
   github: {
     username: "Vinicius163-dot",
+    repo: "portfolio-vini",
     featured: [] as string[],
     maxRepos: 6,
   },

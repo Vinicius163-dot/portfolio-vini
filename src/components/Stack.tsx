@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { useScrollReveal } from "../hooks/useScrollReveal";
 import { siteData } from "../data/siteData";
@@ -16,6 +17,11 @@ export default function Stack() {
   const { ref, isInView } = useScrollReveal(0.12);
   const { t } = useI18n();
   const { skills } = siteData;
+  const [activeGroup, setActiveGroup] = useState<number | null>(null);
+
+  const visibleGroups = activeGroup === null
+    ? skills.groups.map((items, i) => ({ items, i }))
+    : [{ items: skills.groups[activeGroup], i: activeGroup }];
 
   return (
     <section className="skills" id="skills" ref={ref}>
@@ -31,9 +37,27 @@ export default function Stack() {
         </div>
       </motion.header>
 
+      <div className="skills__filter">
+        <button
+          className={`skills__filter-btn${activeGroup === null ? " skills__filter-btn--active" : ""}`}
+          onClick={() => setActiveGroup(null)}
+        >
+          All
+        </button>
+        {t.skills.groupTitles.map((title, i) => (
+          <button
+            key={title}
+            className={`skills__filter-btn${activeGroup === i ? " skills__filter-btn--active" : ""}`}
+            onClick={() => setActiveGroup(activeGroup === i ? null : i)}
+          >
+            {title}
+          </button>
+        ))}
+      </div>
+
       <div className="about__grid">
         <div>
-          {skills.groups.map((items, i) => (
+          {visibleGroups.map(({ items, i }) => (
             <motion.article
               key={t.skills.groupTitles[i]}
               className="skill-card"

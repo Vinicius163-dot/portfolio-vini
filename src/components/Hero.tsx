@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { siteData } from "../data/siteData";
 import { useI18n } from "../i18n/I18nContext";
+import { useTypewriter } from "../hooks/useTypewriter";
 import heroBanner from "../assets/banner_portfolio.gif";
 
 const fadeUp = {
@@ -15,14 +16,15 @@ const fadeUp = {
 export default function Hero() {
   const { social } = siteData;
   const { t } = useI18n();
+  const typeword = useTypewriter(t.hero.typewriterWords);
 
   return (
     <section className="hero" id="home">
       <motion.div
         className="hero__banner"
-        initial={{ opacity: 0, scale: 1.02 }}
+        initial={{ opacity: 0, scale: 1.04 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.8, ease: "easeOut" }}
+        transition={{ duration: 1.1, ease: "easeOut" }}
       >
         <img src={heroBanner} alt="" aria-hidden="true" />
       </motion.div>
@@ -34,11 +36,11 @@ export default function Hero() {
         animate="visible"
         custom={0}
       >
-        {t.hero.titleLines.map((line, i) => (
-          <span key={i} className="hero__title-line">
-            {line}
-          </span>
-        ))}
+        <span className="hero__title-line">{t.hero.titleLines[0]}</span>
+        <span className="hero__title-line hero__title-line--typed">
+          {typeword}
+          <span className="hero__cursor" aria-hidden="true">|</span>
+        </span>
       </motion.h1>
 
       <div className="hero__grid">
@@ -112,28 +114,15 @@ export default function Hero() {
             {s.label}
           </a>
         ))}
-        <a
-          href={`mailto:${siteData.email}`}
-          className="hero__social-pill"
-        >
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.8"
-          >
+        <a href={`mailto:${siteData.email}`} className="hero__social-pill">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
             <rect x="2.5" y="5" width="19" height="14" rx="2" />
             <path d="M3 7l9 6 9-6" />
           </svg>
           Email
         </a>
         <a className="hero__social-pill" href={siteData.cvUrl}>
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.8"
-          >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
             <path d="M12 3v13" />
             <polyline points="7 11 12 16 17 11" />
             <path d="M4 20h16" />
@@ -141,6 +130,28 @@ export default function Hero() {
           CV
         </a>
       </motion.div>
+
+      <motion.a
+        href="#services"
+        className="hero__scroll-hint"
+        aria-label={t.hero.scrollHint}
+        initial={{ opacity: 0, y: -8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.2, duration: 0.6 }}
+      >
+        <span className="hero__scroll-label">{t.hero.scrollHint}</span>
+        <svg
+          className="hero__scroll-chevron"
+          viewBox="0 0 24 24"
+          width="20"
+          height="20"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+        >
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </motion.a>
     </section>
   );
 }

@@ -16,8 +16,10 @@ export type Translation = {
   hero: {
     eyebrow: string;
     titleLines: [string, string];
+    typewriterWords: string[];
     projectsBtn: string;
     projectsAria: string;
+    scrollHint: string;
   };
   services: {
     annotation: string;
@@ -41,7 +43,7 @@ export type Translation = {
     title: string;
     totalLabel: string;
     totalValue: string;
-    itemsExtras: { periodSub: string; role: string }[];
+    itemsExtras: { periodSub: string; role: string; details: string[] }[];
   };
   projects: {
     annotation: string;
@@ -113,8 +115,10 @@ export const translations: Record<Lang, Translation> = {
       eyebrow:
         "Meu objetivo é <em>escrever código limpo, confiável e fácil de manter</em>, que escala bem em produção.",
       titleLines: ["Software", "Engineer"],
+      typewriterWords: ["Engineer", "Architect", "Builder", "Developer"],
       projectsBtn: "Projetos",
       projectsAria: "Ir para projetos",
+      scrollHint: "Rolar para baixo",
     },
     services: {
       annotation: "... /serviços ...",
@@ -166,10 +170,10 @@ export const translations: Record<Lang, Translation> = {
       totalLabel: "Total",
       totalValue: "5+ anos",
       itemsExtras: [
-        { periodSub: "1 ano+", role: "Solutions Architect" },
-        { periodSub: "2 anos", role: "Software Engineer" },
-        { periodSub: "2 anos", role: "Backend Developer" },
-        { periodSub: "1 ano", role: "Junior Developer" },
+        { periodSub: "1 ano+", role: "Solutions Architect", details: ["Arquitetura de soluções cloud na AWS e Azure", "Liderança técnica de squads de engenharia", "Definição de padrões e boas práticas de desenvolvimento"] },
+        { periodSub: "2 anos", role: "Software Engineer", details: ["Desenvolvimento de APIs REST com Java e Spring Boot", "Design e implementação de microsserviços", "Integração com plataformas cloud e sistemas externos"] },
+        { periodSub: "2 anos", role: "Backend Developer", details: ["Desenvolvimento backend com Python e Golang", "Otimização de performance e pipelines de dados", "Implementação de soluções escaláveis em cloud"] },
+        { periodSub: "1 ano", role: "Junior Developer", details: ["Desenvolvimento fullstack com Node.js e React", "Manutenção e evolução de aplicações web", "Primeiros passos em arquitetura e boas práticas"] },
       ],
     },
     projects: {
@@ -251,8 +255,10 @@ export const translations: Record<Lang, Translation> = {
       eyebrow:
         "My goal is to <em>write maintainable, clean and reliable code</em> that scales well in production.",
       titleLines: ["Software", "Engineer"],
+      typewriterWords: ["Engineer", "Architect", "Builder", "Developer"],
       projectsBtn: "Projects",
       projectsAria: "Go to projects",
+      scrollHint: "Scroll down",
     },
     services: {
       annotation: "... /services ...",
@@ -304,10 +310,10 @@ export const translations: Record<Lang, Translation> = {
       totalLabel: "Total",
       totalValue: "5+ years",
       itemsExtras: [
-        { periodSub: "1 year+", role: "Solutions Architect" },
-        { periodSub: "2 years", role: "Software Engineer" },
-        { periodSub: "2 years", role: "Backend Developer" },
-        { periodSub: "1 year", role: "Junior Developer" },
+        { periodSub: "1 year+", role: "Solutions Architect", details: ["Cloud architecture on AWS and Azure", "Technical leadership of engineering squads", "Defining standards and development best practices"] },
+        { periodSub: "2 years", role: "Software Engineer", details: ["REST API development with Java and Spring Boot", "Design and implementation of microservices", "Integration with cloud platforms and external systems"] },
+        { periodSub: "2 years", role: "Backend Developer", details: ["Backend development with Python and Golang", "Performance optimization and data pipelines", "Implementation of scalable cloud solutions"] },
+        { periodSub: "1 year", role: "Junior Developer", details: ["Fullstack development with Node.js and React", "Maintenance and evolution of web applications", "First steps in architecture and best practices"] },
       ],
     },
     projects: {
@@ -389,8 +395,10 @@ export const translations: Record<Lang, Translation> = {
       eyebrow:
         "Mi objetivo es <em>escribir código limpio, confiable y mantenible</em> que escala bien en producción.",
       titleLines: ["Software", "Engineer"],
+      typewriterWords: ["Engineer", "Architect", "Builder", "Developer"],
       projectsBtn: "Proyectos",
       projectsAria: "Ir a proyectos",
+      scrollHint: "Desplazarse abajo",
     },
     services: {
       annotation: "... /servicios ...",
@@ -442,10 +450,10 @@ export const translations: Record<Lang, Translation> = {
       totalLabel: "Total",
       totalValue: "5+ años",
       itemsExtras: [
-        { periodSub: "1 año+", role: "Solutions Architect" },
-        { periodSub: "2 años", role: "Software Engineer" },
-        { periodSub: "2 años", role: "Backend Developer" },
-        { periodSub: "1 año", role: "Junior Developer" },
+        { periodSub: "1 año+", role: "Solutions Architect", details: ["Arquitectura de soluciones cloud en AWS y Azure", "Liderazgo técnico de squads de ingeniería", "Definición de estándares y buenas prácticas de desarrollo"] },
+        { periodSub: "2 años", role: "Software Engineer", details: ["Desarrollo de APIs REST con Java y Spring Boot", "Diseño e implementación de microservicios", "Integración con plataformas cloud y sistemas externos"] },
+        { periodSub: "2 años", role: "Backend Developer", details: ["Desarrollo backend con Python y Golang", "Optimización de rendimiento y pipelines de datos", "Implementación de soluciones escalables en cloud"] },
+        { periodSub: "1 año", role: "Junior Developer", details: ["Desarrollo fullstack con Node.js y React", "Mantenimiento y evolución de aplicaciones web", "Primeros pasos en arquitectura y buenas prácticas"] },
       ],
     },
     projects: {
@@ -527,8 +535,10 @@ export const translations: Record<Lang, Translation> = {
       eyebrow:
         "Mon objectif est <em>d'écrire du code propre, fiable et maintenable</em> qui scale bien en production.",
       titleLines: ["Software", "Engineer"],
+      typewriterWords: ["Engineer", "Architect", "Builder", "Developer"],
       projectsBtn: "Projets",
       projectsAria: "Aller aux projets",
+      scrollHint: "Défiler vers le bas",
     },
     services: {
       annotation: "... /services ...",
@@ -580,10 +590,10 @@ export const translations: Record<Lang, Translation> = {
       totalLabel: "Total",
       totalValue: "5+ ans",
       itemsExtras: [
-        { periodSub: "1 an+", role: "Solutions Architect" },
-        { periodSub: "2 ans", role: "Software Engineer" },
-        { periodSub: "2 ans", role: "Backend Developer" },
-        { periodSub: "1 an", role: "Junior Developer" },
+        { periodSub: "1 an+", role: "Solutions Architect", details: ["Architecture de solutions cloud sur AWS et Azure", "Leadership technique des squads d'ingénierie", "Définition des standards et bonnes pratiques de développement"] },
+        { periodSub: "2 ans", role: "Software Engineer", details: ["Développement d'APIs REST avec Java et Spring Boot", "Conception et implémentation de microservices", "Intégration avec des plateformes cloud et systèmes externes"] },
+        { periodSub: "2 ans", role: "Backend Developer", details: ["Développement backend avec Python et Golang", "Optimisation des performances et pipelines de données", "Implémentation de solutions scalables dans le cloud"] },
+        { periodSub: "1 an", role: "Junior Developer", details: ["Développement fullstack avec Node.js et React", "Maintenance et évolution des applications web", "Premiers pas en architecture et bonnes pratiques"] },
       ],
     },
     projects: {
@@ -665,8 +675,10 @@ export const translations: Record<Lang, Translation> = {
       eyebrow:
         "Il mio obiettivo è <em>scrivere codice pulito, affidabile e manutenibile</em> che scala bene in produzione.",
       titleLines: ["Software", "Engineer"],
+      typewriterWords: ["Engineer", "Architect", "Builder", "Developer"],
       projectsBtn: "Progetti",
       projectsAria: "Vai ai progetti",
+      scrollHint: "Scorri verso il basso",
     },
     services: {
       annotation: "... /servizi ...",
@@ -718,10 +730,10 @@ export const translations: Record<Lang, Translation> = {
       totalLabel: "Totale",
       totalValue: "5+ anni",
       itemsExtras: [
-        { periodSub: "1 anno+", role: "Solutions Architect" },
-        { periodSub: "2 anni", role: "Software Engineer" },
-        { periodSub: "2 anni", role: "Backend Developer" },
-        { periodSub: "1 anno", role: "Junior Developer" },
+        { periodSub: "1 anno+", role: "Solutions Architect", details: ["Architettura di soluzioni cloud su AWS e Azure", "Leadership tecnico degli squad di ingegneria", "Definizione di standard e best practice di sviluppo"] },
+        { periodSub: "2 anni", role: "Software Engineer", details: ["Sviluppo di API REST con Java e Spring Boot", "Design e implementazione di microservizi", "Integrazione con piattaforme cloud e sistemi esterni"] },
+        { periodSub: "2 anni", role: "Backend Developer", details: ["Sviluppo backend con Python e Golang", "Ottimizzazione delle prestazioni e pipeline di dati", "Implementazione di soluzioni scalabili nel cloud"] },
+        { periodSub: "1 anno", role: "Junior Developer", details: ["Sviluppo fullstack con Node.js e React", "Manutenzione ed evoluzione di applicazioni web", "Primi passi in architettura e best practice"] },
       ],
     },
     projects: {

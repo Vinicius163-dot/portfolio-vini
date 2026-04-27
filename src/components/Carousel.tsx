@@ -1,3 +1,4 @@
+import { useState } from "react";
 import awsLogo from "../assets/logos/aws.png";
 import csharpLogo from "../assets/logos/csharp.png";
 import dockerLogo from "../assets/logos/docker.jpg";
@@ -33,13 +34,24 @@ const platforms: { name: string; icon: string }[] = [
 
 export default function Carousel() {
   const loop = [...platforms, ...platforms, ...platforms];
+  const [paused, setPaused] = useState(false);
+  const [tooltip, setTooltip] = useState<string | null>(null);
 
   return (
     <div className="platforms">
-      <div className="platforms__track-wrap">
-        <div className="platforms__track">
+      <div
+        className="platforms__track-wrap"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => { setPaused(false); setTooltip(null); }}
+      >
+        <div className={`platforms__track${paused ? " platforms__track--paused" : ""}`}>
           {loop.map((p, i) => (
-            <span key={i} className="platform-chip">
+            <span
+              key={i}
+              className={`platform-chip${tooltip === p.name + i ? " platform-chip--active" : ""}`}
+              onMouseEnter={() => setTooltip(p.name + i)}
+              onMouseLeave={() => setTooltip(null)}
+            >
               <img
                 className="platform-chip__icon"
                 src={p.icon}
