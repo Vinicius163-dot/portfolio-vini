@@ -29,7 +29,7 @@ export function clearSession(): void {
 
 function scheduleRefresh(expiresAt: number): void {
   if (refreshTimer) clearTimeout(refreshTimer);
-  const delay = Math.max(0, expiresAt - Date.now() - 60_000); // 1 min before expiry
+  const delay = Math.max(0, expiresAt - Date.now() - 60_000);
   refreshTimer = setTimeout(async () => {
     const res = await authApi.refresh();
     if (res.ok) {
@@ -50,8 +50,15 @@ export async function tryRestoreSession(): Promise<boolean> {
   return false;
 }
 
-export async function login(password: string): Promise<{ ok: true } | { ok: false; error: string }> {
-  const res = await authApi.login(password);
+export interface IAMCredentials {
+  accessKeyId: string;
+  secretAccessKey: string;
+}
+
+export async function login(
+  credentials: IAMCredentials
+): Promise<{ ok: true } | { ok: false; error: string }> {
+  const res = await authApi.login(credentials);
   if (!res.ok) return { ok: false, error: res.error };
   setSession(res.data.token, res.data.expiresAt);
   return { ok: true };

@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { isAuthenticated, tryRestoreSession, login as doLogin, logout as doLogout } from "../lib/auth";
+import type { IAMCredentials } from "../lib/auth";
 
 type AuthState = "loading" | "authenticated" | "unauthenticated";
 
@@ -16,8 +17,8 @@ export function useAuth() {
     );
   }, []);
 
-  const login = useCallback(async (password: string) => {
-    const result = await doLogin(password);
+  const login = useCallback(async (credentials: IAMCredentials) => {
+    const result = await doLogin(credentials);
     if (result.ok) setState("authenticated");
     return result;
   }, []);

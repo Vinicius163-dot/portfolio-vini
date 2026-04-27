@@ -1,5 +1,6 @@
 import type { ApiResponse, AuthResponse, SectionGetResponse, SectionPutRequest } from "../../../shared/types/api";
 import type { PortfolioData, SectionKey } from "../../../shared/types/portfolio";
+import type { IAMCredentials } from "./auth";
 import { getToken, clearSession } from "./auth";
 
 const BASE = "/api";
@@ -32,10 +33,10 @@ async function request<T>(
 }
 
 export const authApi = {
-  login: (password: string) =>
+  login: (credentials: IAMCredentials) =>
     request<AuthResponse>("/admin/auth", {
       method: "POST",
-      body: JSON.stringify({ password }),
+      body: JSON.stringify(credentials),
     }),
 
   refresh: () =>

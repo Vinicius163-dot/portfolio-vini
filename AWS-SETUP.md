@@ -105,19 +105,12 @@ Acesse **Vercel → seu projeto → Settings → Environment Variables** e adici
 | `DYNAMODB_TABLE` | `portfolio-data` | Production, Preview |
 | `JWT_SECRET` | string aleatória longa (≥32 chars) | Production, Preview |
 | `JWT_REFRESH_SECRET` | outra string aleatória longa (≥32 chars) | Production, Preview |
-| `ADMIN_PASSWORD_HASH` | hash bcrypt da sua senha (ver abaixo) | Production, Preview |
+| `EXPECTED_ACCOUNT_ID` | ID da sua conta AWS (12 dígitos) — opcional mas recomendado | Production, Preview |
 
-### Gerar o ADMIN_PASSWORD_HASH
+### Encontrar seu Account ID
 
-Execute localmente (Node.js):
-
-```bash
-node -e "const b=require('bcryptjs'); b.hash('SUA_SENHA_AQUI', 12).then(console.log)"
-```
-
-Ou use um gerador online de bcrypt com cost factor 12.
-
-Cole o hash gerado (começa com `$2a$12$...`) na variável `ADMIN_PASSWORD_HASH`.
+No console AWS, clique no seu nome de usuário no canto superior direito.  
+O Account ID aparece no dropdown (formato: `123456789012`).
 
 ---
 
@@ -138,7 +131,7 @@ Certifique-se de que a tabela foi criada na mesma região definida em `AWS_REGIO
 - [ ] Tabela `portfolio-data` criada com pk (String) + sk (String)
 - [ ] PITR habilitado na tabela
 - [ ] Todas as 7 variáveis de ambiente adicionadas no Vercel
-- [ ] `ADMIN_PASSWORD_HASH` gerado com bcrypt cost 12
+- [ ] `EXPECTED_ACCOUNT_ID` adicionado (opcional mas recomendado)
 
 ---
 
